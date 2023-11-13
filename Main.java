@@ -1,22 +1,55 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-public class Main {
+public class Main extends JFrame {
+    private int x = 200; // начальные координаты изображения
+    private int y = 200;
+
+    public Main() {
+        setTitle("Перемещение изображения");
+        setSize(500, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon image = new ImageIcon("madCat.jpg"); // путь к изображению
+                image.paintIcon(this, g, x, y);
+            }
+        };
+
+        panel.setFocusable(true);
+        panel.requestFocusInWindow();
+        panel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                if (keyCode == KeyEvent.VK_LEFT) {
+                    x -= 50; // смещение изображения влево
+                } else if (keyCode == KeyEvent.VK_RIGHT) {
+                    x += 50; // смещение изображения вправо
+                } else if (keyCode == KeyEvent.VK_UP) {
+                    y -= 50; // смещение изображения вверх
+                } else if (keyCode == KeyEvent.VK_DOWN) {
+                    y += 50; // смещение изображения вниз
+                }
+                panel.repaint(); // перерисовка панели
+            }
+        });
+
+        add(panel);
+        setVisible(true);
+
+        setSize(800, 600); // Установка размеров окна
+
+        setVisible(true); // Отображение окна
+    }
 
     public static void main(String[] args) {
-        // Загрузка изображения
-        ImageIcon imageIcon = new ImageIcon("madCat.jpg");
+        SwingUtilities.invokeLater(() -> new Main());
 
-        // Создание окна
-        JFrame frame = new JFrame("mad cat");
-        frame.setLayout(null);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        JLabel label = new JLabel(imageIcon); // Создание компонента для отображения изображения
-        label.setBounds(0, 0, 100, 100); // Установка координат и размеров метки
-        frame.add(label); // Добавление компонента на окно
-
-        frame.setSize(800, 600); // Установка размеров окна
-
-        frame.setVisible(true); // Отображение окна
     }
 
     // private static void centerFrameOnScreen(JFrame frame) {
