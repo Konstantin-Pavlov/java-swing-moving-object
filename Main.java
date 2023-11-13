@@ -10,7 +10,7 @@ public class Main extends JFrame {
     public Main() {
         setTitle("Перемещение изображения");
         setSize(800, 600); // Установка размеров окна
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         panel = new JPanel() {
             @Override
@@ -36,6 +36,8 @@ public class Main extends JFrame {
                 } else if (keyCode == KeyEvent.VK_DOWN) {
                     y += 10; // смещение изображения вниз
                 }
+
+                // проверка чтобы изображение не выходило за пределы экрана
                 x = x < 0 ? 0 : x;
                 x = x > 690 ? 690 : x;
                 y = y < 0 ? 0 : y;
@@ -46,13 +48,15 @@ public class Main extends JFrame {
         });
 
         add(panel);
-        
+
     }
 
     public static void main(String[] args) {
-        //SwingUtilities.invokeLater(Main::new);
+        // SwingUtilities.invokeLater(Main::new); // one way to run this
+
         Main main = new Main(); // another way to run this
         main.setVisible(true);
+        centerFrameOnScreen(main);
 
         Dimension panelSize = main.panel.getSize();
 
@@ -63,15 +67,15 @@ public class Main extends JFrame {
 
     }
 
-    // private static void centerFrameOnScreen(JFrame frame) {
-    // // Get the size of the screen
-    // Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static void centerFrameOnScreen(JFrame frame) {
+        // Get the size of the screen
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    // // Calculate the position to center the frame
-    // int x = (screenSize.width - frame.getWidth()) / 2;
-    // int y = (screenSize.height - frame.getHeight()) / 2;
+        // Calculate the position to center the frame
+        int x = (screenSize.width - frame.getWidth()) / 2;
+        int y = (screenSize.height - frame.getHeight()) / 2;
 
-    // // Set the frame's location
-    // frame.setLocation(x, y);
-    // }
+        // Set the frame's location
+        frame.setLocation(x, y);
+    }
 }
