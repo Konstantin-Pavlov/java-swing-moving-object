@@ -3,15 +3,16 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Main extends JFrame {
-    private int x = 200; // начальные координаты изображения
-    private int y = 200;
+    private int x = 0; // начальные координаты изображения
+    private int y = 0;
+    JPanel panel;
 
     public Main() {
         setTitle("Перемещение изображения");
-        setSize(500, 500);
+        setSize(800, 600); // Установка размеров окна
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel panel = new JPanel() {
+        panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -27,28 +28,38 @@ public class Main extends JFrame {
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
                 if (keyCode == KeyEvent.VK_LEFT) {
-                    x -= 50; // смещение изображения влево
+                    x -= 10; // смещение изображения влево
                 } else if (keyCode == KeyEvent.VK_RIGHT) {
-                    x += 50; // смещение изображения вправо
+                    x += 10; // смещение изображения вправо
                 } else if (keyCode == KeyEvent.VK_UP) {
-                    y -= 50; // смещение изображения вверх
+                    y -= 10; // смещение изображения вверх
                 } else if (keyCode == KeyEvent.VK_DOWN) {
-                    y += 50; // смещение изображения вниз
+                    y += 10; // смещение изображения вниз
                 }
+                x = x < 0 ? 0 : x;
+                x = x > 690 ? 690 : x;
+                y = y < 0 ? 0 : y;
+                y = y > 470 ? 470 : y;
+                // System.out.println(x + " " + y);
                 panel.repaint(); // перерисовка панели
             }
         });
 
         add(panel);
-        setVisible(true);
-
-        setSize(800, 600); // Установка размеров окна
-
-        setVisible(true); // Отображение окна
+        
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Main());
+        //SwingUtilities.invokeLater(Main::new);
+        Main main = new Main(); // another way to run this
+        main.setVisible(true);
+
+        Dimension panelSize = main.panel.getSize();
+
+        int panelWidth = panelSize.width;
+        int panelHeight = panelSize.height;
+
+        System.out.println("Panel size: " + panelWidth + " x " + panelHeight);
 
     }
 
