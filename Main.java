@@ -27,21 +27,23 @@ public class Main extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
+                int shft = 10;
                 if (keyCode == KeyEvent.VK_LEFT) {
-                    x -= 10; // смещение изображения влево
+                    x -= shft; // смещение изображения влево
                 } else if (keyCode == KeyEvent.VK_RIGHT) {
-                    x += 10; // смещение изображения вправо
+                    x += shft; // смещение изображения вправо
                 } else if (keyCode == KeyEvent.VK_UP) {
-                    y -= 10; // смещение изображения вверх
+                    y -= shft; // смещение изображения вверх
                 } else if (keyCode == KeyEvent.VK_DOWN) {
-                    y += 10; // смещение изображения вниз
+                    y += shft; // смещение изображения вниз
                 }
 
                 // проверка чтобы изображение не выходило за пределы экрана
-                x = x < 0 ? 0 : x;
-                x = x > 690 ? 690 : x;
-                y = y < 0 ? 0 : y;
-                y = y > 470 ? 470 : y;
+                // если вышло, оно появляется на противополжной стороне
+                x = x < 0 ? 690 : x;
+                x = x > 690 ? 0 : x;
+                y = y < 0 ? 470 : y;
+                y = y > 470 ? 0 : y;
                 // System.out.println(x + " " + y);
                 panel.repaint(); // перерисовка панели
             }
