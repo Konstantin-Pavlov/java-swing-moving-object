@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 
 // todo отредактировать
-//  другой вариант
+//  другой вариант - изображение загружается с сайта
 public class T330004 {
     static JFrame frame = new JFrame();// создаем форму
     static JLabel l;// объект с картинкой
