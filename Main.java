@@ -23,11 +23,17 @@ public class Main extends JFrame {
 
         panel.setFocusable(true);
         panel.requestFocusInWindow();
+
         panel.addKeyListener(new KeyAdapter() {
+            int shft = 10;
+
             @Override
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
-                int shft = 10;
+
+                if (e.getKeyCode() == KeyEvent.VK_SHIFT && e.isShiftDown()) {
+                    shft = 20;
+                }
                 if (keyCode == KeyEvent.VK_LEFT) {
                     x -= shft; // смещение изображения влево
                 } else if (keyCode == KeyEvent.VK_RIGHT) {
@@ -48,6 +54,16 @@ public class Main extends JFrame {
                 // System.out.println(x + " " + y);
                 panel.repaint(); // перерисовка панели
             }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+
+                if (keyCode == KeyEvent.VK_SHIFT) {
+                    shft = 10; // Приведение скорости к изначальному значению при отпускании клавиши Shift
+                }
+            }
+
         });
 
         add(panel);
